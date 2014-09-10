@@ -1,0 +1,12 @@
+# CustomMobDrop version 1.0 configuration file.
+# Please check this site for all the mobs: http://jd.bukkit.org/beta/apidocs/org/bukkit/entity/EntityType.html
+# Please also check all the Bukkit's materials http://jd.bukkit.org/beta/apidocs/org/bukkit/Material.html
+enabled: true
+mob-drops:
+  CREEPER:
+    tnt:
+      type: TNT
+      amount: 1
+      name: '&6Creepy TNT'
+      description:
+      - '&1I love Exxxxplodeees &4&l<3'

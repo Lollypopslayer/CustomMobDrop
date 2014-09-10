@@ -1,0 +1,12 @@
+name: CustomMobDrop
+version: '1.0'
+author: TheMolkaPL
+website: http://www.github.com/TheMolkaPL/CustomMobDrop
+description: 'Customize a mobs drops!'
+main: pl.themolka.custommobdrop.CustomMobDrop
+prefix: 'CMD'
+commands:
+  cmdreload:
+    description: 'Reload CustomMobDrops config.yml'
+    aliases: [custommobdrop]
+    usage: /cmdreload
