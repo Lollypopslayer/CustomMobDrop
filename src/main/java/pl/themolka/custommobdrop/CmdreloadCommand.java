@@ -18,11 +18,13 @@ public class CmdreloadCommand implements CommandExecutor {
                 return true;
             }
             sender.sendMessage(CmdreloadCommand.PREFIX + ChatColor.GREEN + "Reloading your config.yml file...");
+            long reload = System.currentTimeMillis();
             CustomMobDrop.getInstance().reloadConfig(); // Use FileConfiguration.load(InputStream) for custom error msgs?
             MobsConfigLoader.load();
             int mobs = CMD.getMobs().size();
             int drops = CMD.getAmountOfLoadedDrops();
-            sender.sendMessage(CmdreloadCommand.PREFIX + ChatColor.GREEN + "Reloaded successfully. Loaded " + mobs + " mobs and " + drops + " drops.");
+            reload = System.currentTimeMillis() - reload;
+            sender.sendMessage(CmdreloadCommand.PREFIX + ChatColor.GREEN + "Reloaded successfully. Loaded " + mobs + " mobs and " + drops + " drops in " + reload + " ms.");
             return true;
         }
         return false;

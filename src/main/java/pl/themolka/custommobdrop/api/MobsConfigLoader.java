@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
 import pl.themolka.custommobdrop.CustomItem;
+import pl.themolka.custommobdrop.CustomItemAmount;
 import pl.themolka.custommobdrop.CustomMob;
 import pl.themolka.custommobdrop.CustomMobDrop;
 
@@ -50,7 +51,8 @@ public class MobsConfigLoader {
                     return;
                 }
                 
-                int amount = file.getInt("mob-drops." + mob + "." + item + ".amount", 1);
+                String amountString = file.getString("mob-drops." + mob + "." + item + ".amount", "1");
+                ItemAmount amount = MobsConfigLoader.getItemAmount(amountString);
                 Item newItem = new CustomItem(material, amount);
                 
                 String namePath = "mob-drops." + mob + "." + item + ".name";
@@ -78,5 +80,31 @@ public class MobsConfigLoader {
             array.add(MobsConfigLoader.color(string));
         }
         return array;
+    }
+    
+    private static ItemAmount getItemAmount(String string) {
+        ItemAmount amount = new CustomItemAmount(1);
+        if (string.contains("-")) {
+            int split = string.indexOf("-");
+            int min = 1;
+            int max = 2;
+            try {
+                min = Integer.valueOf(string.substring(0, split));
+                split++;
+                max = Integer.valueOf(string.substring(split, string.length()));
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+            amount = new CustomItemAmount(min, max);
+        } else {
+            int integer = 1;
+            try {
+                integer = Integer.valueOf(string);
+            } catch (NumberFormatException ex) {
+                ex.printStackTrace();
+            }
+            amount = new CustomItemAmount(integer);
+        }
+        return amount;
     }
 }

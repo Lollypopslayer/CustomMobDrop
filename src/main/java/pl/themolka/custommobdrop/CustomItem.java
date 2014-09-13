@@ -5,28 +5,37 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import pl.themolka.custommobdrop.api.Item;
+import pl.themolka.custommobdrop.api.ItemAmount;
 
 public class CustomItem implements Item {
     private final Material material;
-    private final int amount;
-    private ItemStack item;
+    private final int minAmount;
+    private final int maxAmount;
+    private String name;
+    private List<String> description;
     
     public CustomItem(Material material) {
-        this.material = material;
-        this.amount = 1;
+        this(material, new CustomItemAmount(1));
     }
     
-    public CustomItem(Material material, int amount) {
+    public CustomItem(Material material, ItemAmount amount) {
         this.material = material;
-        this.amount = amount;
+        this.minAmount = amount.getMin();
+        this.maxAmount = amount.getMax();
     }
     
     @Override
     public ItemStack getItem() {
-        if (this.item == null) {
-            this.item = new ItemStack(material, amount);
+        ItemStack item = new ItemStack(material, this.getAmount().getRandom());
+        ItemMeta meta = item.getItemMeta();
+        if (this.hasName()) {
+            meta.setDisplayName(this.getName());
         }
-        return this.item;
+        if (this.hasDescription()) {
+            meta.setLore(this.getDescription());
+        }
+        item.setItemMeta(meta);
+        return item;
     }
     
     @Override
@@ -35,19 +44,19 @@ public class CustomItem implements Item {
     }
     
     @Override
-    public int getAmount() {
-        return this.amount;
+    public ItemAmount getAmount() {
+        return new CustomItemAmount(minAmount, maxAmount);
     }
     
     @Override
     public boolean hasName() {
-        return this.getItem().getItemMeta().hasDisplayName();
+        return this.name != null;
     }
     
     @Override
     public String getName() throws NullPointerException {
         if (this.hasName()) {
-           return this.getItem().getItemMeta().getDisplayName();
+           return this.name;
         } else {
             throw new NullPointerException("name of the item can not be null");
         }
@@ -55,20 +64,18 @@ public class CustomItem implements Item {
     
     @Override
     public void setName(String name) {
-        ItemMeta meta = this.getItem().getItemMeta();
-        meta.setDisplayName(name);
-        this.item.setItemMeta(meta);
+        this.name = name;
     }
     
     @Override
     public boolean hasDescription() {
-        return this.getItem().getItemMeta().hasLore();
+        return this.description != null;
     }
     
     @Override
     public List<String> getDescription() throws NullPointerException {
         if (this.hasDescription()) {
-            return this.getItem().getItemMeta().getLore();
+            return this.description;
         } else {
             throw new NullPointerException("description of the item can not be null");
         }
@@ -76,8 +83,6 @@ public class CustomItem implements Item {
     
     @Override
     public void setDescription(List<String> description) {
-        ItemMeta meta = this.getItem().getItemMeta();
-        meta.setLore(description);
-        this.item.setItemMeta(meta);
+        this.description = description;
     }
 }

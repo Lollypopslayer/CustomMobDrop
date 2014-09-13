@@ -6,7 +6,7 @@ mob-drops:
   CREEPER:
     tnt:
       type: TNT
-      amount: 1
+      amount: 1-5
       name: '&6Creepy TNT'
       description:
-      - '&1I love Exxxxplodeees &4&l<3'
+      - '&1I love Exxxxplodions &4&l<3'

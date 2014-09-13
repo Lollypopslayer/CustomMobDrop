@@ -9,7 +9,7 @@ public interface Item {
     
     Material getType();
     
-    int getAmount();
+    ItemAmount getAmount();
     
     boolean hasName();
     
