@@ -36,7 +36,8 @@ public class MobsConfigLoader {
             }
             
             for (String item : file.getConfigurationSection("mob-drops." + mob).getKeys(false)) {
-                String type = file.getString("mob-drops." + mob + "." + item + ".type", "STONE");
+                String path = "mob-drops." + mob + "." + item + ".";
+                String type = file.getString(path + "type", "STONE");
                 type = type.toUpperCase();
                 Material material = null;
                 try {
@@ -51,13 +52,15 @@ public class MobsConfigLoader {
                     return;
                 }
                 
-                String amountString = file.getString("mob-drops." + mob + "." + item + ".amount", "1");
+                boolean random = file.getBoolean(path + "random", false);
+                String amountString = file.getString(path + "amount", "1");
                 ItemAmount amount = MobsConfigLoader.getItemAmount(amountString);
                 Item newItem = new CustomItem(material, amount);
                 
-                String namePath = "mob-drops." + mob + "." + item + ".name";
-                String descriptionPath = "mob-drops." + mob + "." + item + ".description";
+                String namePath = path + "name";
+                String descriptionPath = path + "description";
                 
+                newItem.setRandom(random);
                 if (file.getString(namePath) != null) {
                     newItem.setName(MobsConfigLoader.color(file.getString(namePath)));
                 }

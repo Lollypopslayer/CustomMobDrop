@@ -1,5 +1,6 @@
 package pl.themolka.custommobdrop;
 
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -12,7 +13,10 @@ public class Listeners implements Listener {
         if (CMD.getMob(e.getEntityType()) != null) {
             e.getDrops().clear();
             for (Item item : CMD.getMob(e.getEntityType()).getDrops()) {
-                e.getEntity().getLocation().getWorld().dropItemNaturally(e.getEntity().getLocation(), item.getItem());
+                if (item.drop()) {
+                    Location location = e.getEntity().getLocation();
+                    location.getWorld().dropItemNaturally(location, item.getItem());
+                }
             }
         }
     }

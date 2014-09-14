@@ -1,6 +1,7 @@
 package pl.themolka.custommobdrop;
 
 import java.util.List;
+import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -8,9 +9,10 @@ import pl.themolka.custommobdrop.api.Item;
 import pl.themolka.custommobdrop.api.ItemAmount;
 
 public class CustomItem implements Item {
-    private final Material material;
-    private final int minAmount;
-    private final int maxAmount;
+    private Material material;
+    private int minAmount;
+    private int maxAmount;
+    private boolean random;
     private String name;
     private List<String> description;
     
@@ -44,8 +46,38 @@ public class CustomItem implements Item {
     }
     
     @Override
+    public void setType(Material material) {
+        this.material = material;
+    }
+    
+    @Override
     public ItemAmount getAmount() {
         return new CustomItemAmount(minAmount, maxAmount);
+    }
+    
+    @Override
+    public void setAmount(ItemAmount amount) {
+        this.minAmount = amount.getMin();
+        this.maxAmount = amount.getMax();
+    }
+    
+    @Override
+    public boolean drop() {
+        if (!this.isRandom()) {
+            return true;
+        } else {
+            return new Random().nextBoolean();
+        }
+    }
+    
+    @Override
+    public boolean isRandom() {
+        return this.random;
+    }
+    
+    @Override
+    public void setRandom(boolean random) {
+        this.random = random;
     }
     
     @Override

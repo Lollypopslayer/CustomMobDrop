@@ -10,3 +10,10 @@ mob-drops:
       name: '&6Creepy TNT'
       description:
       - '&1I love Exxxxplodions &4&l<3'
+    torch:
+      type: REDSTONE_TORCH_ON
+      amount: 1
+      random: true
+      name: '&6Activator'
+      description:
+      - '&1Activate your TNT'

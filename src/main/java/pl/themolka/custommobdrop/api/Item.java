@@ -9,7 +9,17 @@ public interface Item {
     
     Material getType();
     
+    void setType(Material material);
+    
     ItemAmount getAmount();
+    
+    void setAmount(ItemAmount amount);
+    
+    boolean drop();
+    
+    boolean isRandom();
+    
+    void setRandom(boolean random);
     
     boolean hasName();
     
