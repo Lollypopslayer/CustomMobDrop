@@ -39,17 +39,30 @@ public class MobsConfigLoader {
                 String path = "mob-drops." + mob + "." + item + ".";
                 String type = file.getString(path + "type", "STONE");
                 type = type.toUpperCase();
-                Material material = null;
+                int typeInteger = 0;
                 try {
-                    material = Material.valueOf(type);
-                } catch (NullPointerException ex) {
-                    MobsConfigLoader.logger.log(Level.INFO, "Failed to read config.yml: {0}",
-                            new Object[] {ex.getStackTrace()});
-                    return;
-                } catch (IllegalArgumentException ex) {
-                    MobsConfigLoader.logger.log(Level.INFO, "Failed to read config.yml: {0}",
-                            new Object[] {ex.getStackTrace()});
-                    return;
+                    typeInteger = Integer.valueOf(type);
+                } catch (NumberFormatException ex) {}
+                
+                Material material = null;
+                if (typeInteger != 0) { // By item's ID
+                    try {
+                        material = Material.getMaterial(typeInteger);
+                    } catch (Throwable ex) {
+                        material = Material.getMaterial(1);
+                        MobsConfigLoader.logger.log(Level.INFO, "Failed to read config.yml: {0}",
+                                new Object[] {ex.getStackTrace()});
+                        return;
+                    }
+                } else { // By item's name
+                    try {
+                        material = Material.valueOf(type);
+                    } catch (Throwable ex) {
+                        material = Material.getMaterial(1);
+                        MobsConfigLoader.logger.log(Level.INFO, "Failed to read config.yml: {0}",
+                                new Object[] {ex.getStackTrace()});
+                        return;
+                    }
                 }
                 
                 boolean random = file.getBoolean(path + "random", false);

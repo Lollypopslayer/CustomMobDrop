@@ -1,5 +1,5 @@
 name: CustomMobDrop
-version: '1.0.2'
+version: '${project.version}'
 author: TheMolkaPL
 website: http://www.github.com/TheMolkaPL/CustomMobDrop
 description: 'Customize a mobs drops!'

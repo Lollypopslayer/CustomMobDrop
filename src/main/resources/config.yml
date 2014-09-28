@@ -1,4 +1,4 @@
-# CustomMobDrop version 1.0 configuration file.
+# CustomMobDrop version ${project.version} configuration file.
 # Please check this site for all the mobs: http://jd.bukkit.org/beta/apidocs/org/bukkit/entity/EntityType.html
 # Please also check all the Bukkit's materials http://jd.bukkit.org/beta/apidocs/org/bukkit/Material.html
 enabled: true
